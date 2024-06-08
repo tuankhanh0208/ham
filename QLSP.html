@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Add New Product</h1>
+    <input type="text" placeholder="New Product" id="product"> <button onclick="addProduct()">Add</button>
+
+    <h1>Display All Product</h1>
+
+    <table id="list">
+
+    </table>
+
+    <script>
+        let listProduct = [];
+        let currentIndex;
+        function showAll() {
+            let html = `
+                 <tr>
+                    <th>Tên</th>
+                    <th colspan="2">Action<th>
+                </tr>
+            `;
+            for (let i = 0; i < listProduct.length; i++) {
+                html += ` 
+                    <tr>
+                        <td>${listProduct[i].product}</td>
+                        <td><button onclick="handleEdit(${i})">Sửa</button></td>
+                        <td><button onclick="handleRemove(${i})">Xóa</button></td>
+                    </tr>
+                    `
+            }
+            document.getElementById("list").innerHTML = html;
+        }
+        showAll();
+
+
+        function addProduct() {
+            const handleInput = document.getElementById("product").value;
+            var item = {
+                product: handleInput,
+            }
+
+            if (currentIndex >= 0) {
+                listProduct.splice(currentIndex, 1, item);
+                currentIndex = -1;
+            } else {
+                listProduct.push(item);
+            }
+            showAll()
+            clear()
+        }
+
+        function handleRemove(a) {
+            listProduct.splice(a, 1);
+            showAll();
+        }
+        function handleEdit(b) {
+            document.getElementById("product").value = listProduct[b].product;
+            currentIndex = b;
+        }
+        // function clear() {
+        //     const handleInput = document.getElementById("product").value = "";
+        // }
+
+    </script>
+</body>
+
+</html>
